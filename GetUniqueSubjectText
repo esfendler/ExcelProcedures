@@ -1,0 +1,35 @@
+input_file = r"C:\\Users\esf\Desktop\ExcelviaPython\AsReceived.txt"
+output_file = r"C:\\Users\esf\Desktop\ExcelviaPython\UniqueValues.txt"
+
+with open(input_file) as in_file:
+    counter = 0
+
+    ListIncludingDupes = []
+    UniqueList = []
+    for line in in_file.readlines():
+
+        numsemicolons = line.count(";")
+
+        if numsemicolons == 0:
+            ListIncludingDupes.append(line)
+        else:
+            linelist = line.split(";")
+            for line_element in linelist:
+                line_element.strip()
+                ListIncludingDupes.append(line_element)
+
+
+        for potential_unique in ListIncludingDupes:
+            if potential_unique == '\n':
+                continue
+            elif potential_unique.strip() not in UniqueList:
+                UniqueList.append(potential_unique.strip())
+            else:
+                continue
+
+
+
+with open(output_file, "a") as out_file:
+    UniqueList.sort()
+    for value in UniqueList:
+        out_file.write('%s\n' % value)
